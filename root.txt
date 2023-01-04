@@ -1,0 +1,124 @@
+//s6 
+//dyqueue.h
+#include<stdio.h>
+#include<malloc.h>
+typedef struct node
+{
+int info;
+struct node *next;
+}NODE;
+NODE *front,*rear;
+void initq()
+{
+front=rear=NULL;
+}
+int isempty()
+{
+return(front==NULL);
+}
+void addq(int num)
+{
+NODE *newnode;
+newnode=(NODE*)malloc(sizeof(NODE));
+newnode->info=num;
+newnode->next=NULL;
+if(front==NULL)
+rear=front=newnode;
+else
+{
+rear->next=newnode;
+rear=newnode;
+}
+}
+int removeq()
+{
+int num;
+NODE *temp=front;
+num=front->info;
+front=front->next;
+free(temp);
+if(front==NULL)
+rear=NULL;
+return(num);
+}
+void display()
+{
+NODE *temp=front;
+if(front==NULL)
+printf("\nQueue is empty");
+else
+{
+for(temp=front;temp!=NULL;temp=temp->next)
+printf("\t%d",temp->info);
+}
+printf("\n");
+}
+
+
+
+//dyQ.c
+#include<stdio.h>
+#include "dyqueue.h"
+void main()
+{
+int choice,num;
+initq();
+do
+{
+printf("\n1.ADD\n2.REMOVE\n3.DISPLAY\n4.EXIT");
+printf("\nEnter your choice");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:printf("\nEnter the element to be added");
+scanf("%d",&num);
+addq(num);
+break;
+case 2:if(isempty())
+printf("\nQueue underflow");
+else
+printf("\nThe removed element is %d",removeq());
+break;
+case 3:display();
+break;
+}
+}
+while(choice!=4);
+}
+
+
+//cc filename.h
+//cc filename.c
+//  ./a.out
+
+//OUTPUT:
+//1.ADD
+//2.REMOVE
+//3.DISPLAY
+//4.EXIT
+//Enter your choice1
+//Enter the element to be added3
+//1.ADD
+//2.REMOVE
+//3.DISPLAY
+//4.EXIT
+//Enter your choice1
+//Enter the element to be added4
+//1.ADD
+//2.REMOVE
+//3.DISPLAY
+//4.EXIT
+//Enter your choice1
+//Enter the element to be added7
+//1.ADD
+//2.REMOVE
+//3.DISPLAY
+//4.EXIT
+//Enter your choice3
+//3 4 7
+//1.ADD
+//2.REMOVE
+//3.DISPLAY
+//4.EXIT
+//Enter your choice2
+//The removed element is 3
